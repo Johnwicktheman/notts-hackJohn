@@ -5,8 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { DvdScreensaver } from 'react-dvd-screensaver';
 import CountdownTimer from './CountdownTimer';
 import DuckMascot from './DuckMascot';
+import { triggerNukeEvent } from './NukeEffect';
 
 import DLFrameReveal from './DLFrameReveal';
+import { CalendarDays, Users, Trophy, UtensilsCrossed } from 'lucide-react';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -14,65 +16,14 @@ const fadeInUp = {
   transition: { duration: 0.6 }
 };
 
-export function DatesSection() {
-  const hackathonStart = new Date('2026-04-06T00:00:00');
-
-  const dates = [
-    { title: 'Hacking Period', date: '6-12 April 2026', description: 'Online hacking begins!' },
-    { title: 'Physical Hacking', date: '10-12 April 2026', location: 'University of Nottingham' },
-  ];
-
-  return (
-    <section id="dates" className="py-20 px-4 relative z-10">
-      <div className="max-w-6xl mx-auto">
-        <motion.h2
-          className="font-pixel text-2xl md:text-4xl text-center mb-4 text-white"
-          {...fadeInUp}
-        >
-          IMPORTANT DATES
-        </motion.h2>
-        <motion.p
-          className="text-center text-[#FF4DA6] font-pixel text-sm mb-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          Mark your calendars!
-        </motion.p>
-
-        <div className="mb-12">
-          <p className="text-center text-white/80 mb-4 font-mono">Countdown to Hacking</p>
-          <CountdownTimer targetDate={hackathonStart} />
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {dates.map((item, index) => (
-            <motion.div
-              key={item.title}
-              className="card-dark p-6 md:p-8"
-              initial={{ opacity: 0, x: index === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-              whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(92, 230, 160, 0.3)' }}
-            >
-              <h3 className="font-pixel text-lg md:text-xl text-[#5CE6A0] mb-3">{item.title}</h3>
-              <p className="font-mono text-2xl md:text-3xl text-white mb-2">{item.date}</p>
-              {item.location && (
-                <p className="font-mono text-[#FF4DA6]">📍 {item.location}</p>
-              )}
-              {item.description && (
-                <p className="font-mono text-white/70">{item.description}</p>
-              )}
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function AboutSection() {
+  const hackathonStart = new Date('2026-04-06T00:00:00');
+  const highlights = [
+    { icon: <CalendarDays className="w-7 h-7" />, label: '6 Days', detail: 'of hacking', color: '#FF4DA6' },
+    { icon: <Users className="w-7 h-7" />, label: '3-5 People', detail: 'per team', color: '#5CE6A0' },
+    { icon: <Trophy className="w-7 h-7" />, label: '$800+', detail: 'in prizes', color: '#FF4DA6' },
+    { icon: <UtensilsCrossed className="w-7 h-7" />, label: 'Meals', detail: 'provided on-site', color: '#5CE6A0' },
+  ];
   return (
     <section id="about" className="py-20 px-4 relative z-10">
       <div className="max-w-4xl mx-auto">
@@ -120,7 +71,34 @@ export function AboutSection() {
           </div>
         </motion.div>
 
-        <div className="mt-12 grid md:grid-cols-2 gap-6">
+        {/* Stat highlights */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {highlights.map((item, index) => (
+            <motion.div
+              key={item.label}
+              className="card-dark p-5 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.05, boxShadow: `0 0 25px ${item.color}30` }}
+            >
+              <div className="mb-2 flex justify-center" style={{ color: item.color }}>{item.icon}</div>
+              <p className="font-pixel text-sm md:text-base" style={{ color: item.color }}>
+                {item.label}
+              </p>
+              <p className="font-mono text-white/60 text-xs mt-1">{item.detail}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-8 mb-8">
+          <p className="text-center text-white/80 mb-4 font-mono">Countdown to Hacking</p>
+          <CountdownTimer targetDate={hackathonStart} />
+        </div>
+
+        {/* Institutions */}
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
           <motion.div
             className="card-dark p-6 text-center"
             whileHover={{ scale: 1.02 }}
@@ -138,6 +116,39 @@ export function AboutSection() {
             <p className="font-mono text-white/70 text-sm">Co-organizer</p>
           </motion.div>
         </div>
+
+        {/* Event format breakdown */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <motion.div
+            className="card-dark p-6 text-center"
+            whileHover={{ scale: 1.02 }}
+          >
+            <h4 className="font-pixel text-sm text-[#5CE6A0] mb-3">ONLINE PHASE</h4>
+            <p className="font-mono text-white/80 text-sm leading-relaxed mb-2">
+              April 6-11 &mdash; Remote hacking from anywhere
+            </p>
+            <ul className="font-mono text-white/60 text-xs space-y-1">
+              <li>- Opening ceremony &amp; hackathon briefing</li>
+              <li>- Pre-hackathon workshops </li>
+              <li>- Five days of building with your team</li>
+            </ul>
+          </motion.div>
+          <motion.div
+            className="card-dark p-6 text-center"
+            whileHover={{ scale: 1.02 }}
+          >
+            <h4 className="font-pixel text-sm text-[#FF4DA6] mb-3">IN-PERSON PHASE</h4>
+            <p className="font-mono text-white/80 text-sm leading-relaxed mb-2">
+              April 12-13 &mdash; On-site hacking at UNM
+            </p>
+            <ul className="font-mono text-white/60 text-xs space-y-1">
+              <li>- Final day of building</li>
+              <li>- Project submission &amp; pitching</li>
+              <li>- Award ceremony &amp; networking</li>
+            </ul>
+          </motion.div>
+        </div>
+
       </div>
     </section>
   );
@@ -234,68 +245,138 @@ export function TracksSection() {
 }
 
 export function SponsorsSection() {
-  const sponsors = [
-    { name: 'DCAI', tier: 'Platinum', icon: '/DCAI.png', bgClass: 'bg-white p-2' },
-    { name: 'CSS Society', tier: 'Organizer', icon: '/CSSLogo.png', bgClass: 'bg-white/10' },
+  const diamondSponsors = [
+    { name: 'DCAI', icon: '/DCAI.png', bgClass: 'bg-white p-2', url: 'https://dcai.ai/' },
+    { name: 'BGA', icon: '/BGA Logo -  (coloured).PNG', bgClass: '', url: 'https://chainforgood.org/' },
+  ];
+
+  const goldSponsors = [
+    { name: 'HackQuest', icon: '/hackquest-logo.svg', bgClass: '', invert: true, url: 'https://www.hackquest.io/' },
+  ];
+
+  const communitySponsors = [
+    { name: 'SA UNMC', icon: '/sa_logo.png', bgClass: '' },
+    { name: 'School of Computer and Mathematical Sciences', icon: '/unm_logo.png', bgClass: '' },
+    { name: 'CSS Society', icon: '/CSSLogo.png', bgClass: 'bg-white/10' },
   ];
 
   return (
     <section id="sponsors" className="py-20 px-4 relative z-10">
-      <div className="max-w-4xl mx-auto">
-        <DLFrameReveal />
-
+      <div className="max-w-5xl mx-auto">
         <motion.h2
-          className="font-pixel text-2xl md:text-4xl text-center mb-4 text-white"
+          className="font-pixel text-2xl md:text-4xl text-center mb-12 text-white"
           {...fadeInUp}
         >
           SPONSORS & PARTNERS
         </motion.h2>
-        <motion.p
-          className="text-center text-[#FF4DA6] font-pixel text-sm mb-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          Made possible by
-        </motion.p>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          {sponsors.map((sponsor, index) => (
-            <motion.div
-              key={sponsor.name}
-              className="card-dark p-8 text-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: '0 0 30px rgba(255, 77, 166, 0.3)'
-              }}
-            >
-              <div className={`w-20 h-20 mx-auto mb-4 rounded-full ${sponsor.bgClass} flex items-center justify-center overflow-hidden`}>
-                {sponsor.icon && (
-                  <img
-                    src={sponsor.icon}
-                    alt={`${sponsor.name} logo`}
-                    className="w-full h-full object-contain"
-                  />
-                )}
-              </div>
-              <h3 className="font-mono text-white font-bold mb-1">{sponsor.name}</h3>
-              <p className="font-pixel text-xs text-[#FF4DA6]">{sponsor.tier}</p>
-            </motion.div>
-          ))}
-        </div>
+        <DLFrameReveal />
 
+        {/* Diamond Sponsors */}
         <motion.p
-          className="text-center mt-12 font-mono text-white/60"
+          className="font-pixel text-xs text-[#5CE6A0] text-center mb-6 tracking-widest uppercase"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          Interested in sponsoring? <a href="mailto:sponsor@nottshack.com" className="text-[#5CE6A0] hover:underline">Contact us</a>
+          Diamond Sponsors
         </motion.p>
+        <div className="flex flex-wrap justify-center items-center gap-10 max-w-3xl mx-auto mb-14">
+          {diamondSponsors.map((sponsor, index) => (
+            <motion.div
+              key={sponsor.name}
+              className="flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.1 }}
+            >
+              <a href={sponsor.url} target="_blank" rel="noopener noreferrer" className={`h-24 ${sponsor.bgClass} flex items-center justify-center overflow-hidden rounded-lg`}>
+                {sponsor.icon ? (
+                  <img
+                    src={sponsor.icon}
+                    alt={`${sponsor.name} logo`}
+                    className="h-full object-contain"
+                  />
+                ) : (
+                  <span className="font-mono text-white/30 text-sm px-8">{sponsor.name}</span>
+                )}
+              </a>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Gold Sponsors */}
+        <motion.p
+          className="font-pixel text-xs text-[#FFE66D] text-center mb-6 tracking-widest uppercase"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          Gold Sponsors
+        </motion.p>
+        <div className="flex flex-wrap justify-center items-center gap-8 max-w-2xl mx-auto mb-14">
+          {goldSponsors.map((sponsor, index) => (
+            <motion.div
+              key={sponsor.name}
+              className="flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.1 }}
+            >
+              <a href={sponsor.url} target="_blank" rel="noopener noreferrer" className={`h-14 max-w-[200px] ${sponsor.bgClass} flex items-center justify-center overflow-hidden rounded-lg`}>
+                {sponsor.icon ? (
+                  <img
+                    src={sponsor.icon}
+                    alt={`${sponsor.name} logo`}
+                    className={`max-h-full max-w-full object-contain${sponsor.invert ? ' invert' : ''}`}
+                  />
+                ) : (
+                  <span className="font-mono text-white/30 text-sm px-6">{sponsor.name}</span>
+                )}
+              </a>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Community Sponsors */}
+        <motion.p
+          className="font-pixel text-xs text-[#FF4DA6] text-center mb-6 tracking-widest uppercase"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          Community Partners
+        </motion.p>
+        <div className="flex flex-wrap justify-center items-center gap-8 max-w-2xl mx-auto mb-10">
+          {communitySponsors.map((sponsor, index) => (
+            <motion.div
+              key={sponsor.name}
+              className="flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.1 }}
+            >
+              <div className={`h-12 ${sponsor.bgClass} flex items-center justify-center overflow-hidden rounded-lg`}>
+                {sponsor.icon ? (
+                  <img
+                    src={sponsor.icon}
+                    alt={`${sponsor.name} logo`}
+                    className="h-full object-contain"
+                  />
+                ) : (
+                  <span className="font-mono text-white/30 text-xs px-4">{sponsor.name}</span>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
       </div>
     </section>
   );
@@ -351,14 +432,14 @@ export function Footer() {
           </div>
 
           <div className="flex justify-center gap-4">
-            <motion.a
-              href="#register"
-              className="btn-primary font-pixel text-[10px] w-fit px-8 py-3 rounded-full whitespace-nowrap"
+            <motion.button
+              onClick={(e) => { e.preventDefault(); triggerNukeEvent(e); }}
+              className="btn-primary font-pixel text-[10px] w-fit px-8 py-3 rounded-full whitespace-nowrap cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               REGISTER NOW
-            </motion.a>
+            </motion.button>
           </div>
         </div>
 
