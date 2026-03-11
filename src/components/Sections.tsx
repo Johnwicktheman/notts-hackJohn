@@ -461,7 +461,7 @@ export function Footer() {
 
           <div className="flex justify-center gap-4">
             <motion.button
-              onClick={(e) => { e.preventDefault(); triggerNukeEvent(); }}
+              onClick={(e) => { e.preventDefault(); triggerNukeEvent(e); }}
               className="btn-primary font-pixel text-[10px] w-fit px-8 py-3 rounded-full whitespace-nowrap cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

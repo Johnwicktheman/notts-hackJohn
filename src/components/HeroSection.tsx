@@ -150,7 +150,7 @@ export default function HeroSection() {
           transition={{ delay: 1 }}
         >
           <motion.button
-            onClick={(e) => { e.preventDefault(); triggerNukeEvent(); }}
+            onClick={(e) => { e.preventDefault(); triggerNukeEvent(e); }}
             className="btn-primary font-pixel text-xs md:text-sm px-8 py-4 rounded-full cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
