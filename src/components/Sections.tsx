@@ -3,12 +3,12 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DvdScreensaver } from 'react-dvd-screensaver';
-import { CalendarDays, Users, Trophy, UtensilsCrossed } from 'lucide-react';
 import CountdownTimer from './CountdownTimer';
 import DuckMascot from './DuckMascot';
 import { triggerNukeEvent } from './NukeEffect';
 
 import DLFrameReveal from './DLFrameReveal';
+import { CalendarDays, Users, Trophy, UtensilsCrossed } from 'lucide-react';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -24,40 +24,51 @@ export function AboutSection() {
     { icon: <Trophy className="w-7 h-7" />, label: '$800+', detail: 'in prizes', color: '#FF4DA6' },
     { icon: <UtensilsCrossed className="w-7 h-7" />, label: 'Meals', detail: 'provided on-site', color: '#5CE6A0' },
   ];
-
   return (
     <section id="about" className="py-20 px-4 relative z-10">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <motion.h2
-          className="font-pixel text-2xl md:text-4xl text-center mb-4 text-white"
+          className="font-pixel text-2xl md:text-4xl text-center mb-12 text-white"
           {...fadeInUp}
         >
           ABOUT NOTTS HACK
         </motion.h2>
-        {/* Main description */}
+
         <motion.div
-          className="card-dark p-8 md:p-10 mb-8"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          className="card-dark p-8 md:p-12"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
         >
-          <p className="font-mono text-base md:text-lg text-white/90 leading-relaxed mb-5">
-            <span className="text-[#5CE6A0] font-bold">NottsHack 2026</span> is a six-day blockchain
-            and cryptocurrency hackathon hosted by the{' '}
-            <span className="text-[#FF4DA6]">Computer Science Society</span> at
-            the University of Nottingham Malaysia.
+          <p className="font-mono text-lg text-white/90 leading-relaxed mb-6">
+            <span className="text-[#5CE6A0] font-bold">Notts Hack</span> is a blockchain-themed hackathon
+            brought to you by the <span className="text-[#FF4DA6]">Computer Science Society (CSS)</span> at
+            the University of Nottingham.
           </p>
-          <p className="font-mono text-base md:text-lg text-white/90 leading-relaxed mb-5">
-            Form a team of 3-5 and tackle industry-defined challenges across two sponsor tracks,
-            with mentorship sessions, workshops, and hands-on guidance from industry professionals
-            throughout the event.
+          <p className="font-mono text-lg text-white/90 leading-relaxed mb-6">
+            Join us for an exciting week of building, hacking, and decentralizing! Whether you&apos;re a
+            seasoned developer or just starting out, this is your chance to explore Web3 technologies,
+            blockchain development, and cutting-edge decentralized applications.
           </p>
-          <p className="font-mono text-base md:text-lg text-white/90 leading-relaxed">
-            Kick off online on <span className="text-white font-bold">April 6th</span> with the opening
-            ceremony and five days of remote hacking, then come together at{' '}
-            <span className="text-white font-bold">UNMC campus</span> on April 11-12 for physical
-            hacking, pitching, and the final awards ceremony.
+          <p className="font-mono text-lg text-white/90 leading-relaxed">
+            Collaborate with talented peers, learn from industry experts, and compete for amazing prizes.
+            Let&apos;s build the future of the decentralized web together! 🚀
           </p>
+
+          <div className="mt-8 flex flex-wrap gap-4 justify-center">
+            <span className="px-4 py-2 bg-[#FF4DA6]/20 rounded-full font-mono text-[#FF4DA6] text-sm">
+              #Web3
+            </span>
+            <span className="px-4 py-2 bg-[#5CE6A0]/20 rounded-full font-mono text-[#5CE6A0] text-sm">
+              #Blockchain
+            </span>
+            <span className="px-4 py-2 bg-[#FF4DA6]/20 rounded-full font-mono text-[#FF4DA6] text-sm">
+              #DeFi
+            </span>
+            <span className="px-4 py-2 bg-[#5CE6A0]/20 rounded-full font-mono text-[#5CE6A0] text-sm">
+              #SmartContracts
+            </span>
+          </div>
         </motion.div>
 
         {/* Stat highlights */}
@@ -86,13 +97,31 @@ export function AboutSection() {
           <CountdownTimer targetDate={hackathonStart} />
         </div>
 
+        {/* Institutions */}
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
+          <motion.div
+            className="card-dark p-6 text-center"
+            whileHover={{ scale: 1.02 }}
+          >
+            <div className="text-4xl mb-3">🎓</div>
+            <h4 className="font-pixel text-sm text-[#5CE6A0] mb-2">UNIVERSITY OF NOTTINGHAM</h4>
+            <p className="font-mono text-white/70 text-sm">Host Institution</p>
+          </motion.div>
+          <motion.div
+            className="card-dark p-6 text-center"
+            whileHover={{ scale: 1.02 }}
+          >
+            <div className="text-4xl mb-3">🇲🇾</div>
+            <h4 className="font-pixel text-sm text-[#FF4DA6] mb-2">STUDENTS&apos; ASSOCIATION MALAYSIA</h4>
+            <p className="font-mono text-white/70 text-sm">Co-organizer</p>
+          </motion.div>
+        </div>
+
         {/* Event format breakdown */}
         <div className="grid md:grid-cols-2 gap-4">
           <motion.div
-            className="card-dark p-6 border-l-2 border-[#5CE6A0]/50"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            className="card-dark p-6 text-center"
+            whileHover={{ scale: 1.02 }}
           >
             <h4 className="font-pixel text-sm text-[#5CE6A0] mb-3">ONLINE PHASE</h4>
             <p className="font-mono text-white/80 text-sm leading-relaxed mb-2">
@@ -105,19 +134,17 @@ export function AboutSection() {
             </ul>
           </motion.div>
           <motion.div
-            className="card-dark p-6 border-l-2 border-[#FF4DA6]/50"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            className="card-dark p-6 text-center"
+            whileHover={{ scale: 1.02 }}
           >
-            <h4 className="font-pixel text-sm text-[#FF4DA6] mb-3">PHYSICAL PHASE</h4>
+            <h4 className="font-pixel text-sm text-[#FF4DA6] mb-3">IN-PERSON PHASE</h4>
             <p className="font-mono text-white/80 text-sm leading-relaxed mb-2">
-              April 11-12 &mdash; On-campus at UNMC
+              April 12-13 &mdash; On-site hacking at UNM
             </p>
             <ul className="font-mono text-white/60 text-xs space-y-1">
-              <li>- Mentorship sessions &amp; project refinement</li>
-              <li>- Physical pitching to judges</li>
-              <li>- Prize giving &amp; closing ceremony</li>
+              <li>- Final day of building</li>
+              <li>- Project submission &amp; pitching</li>
+              <li>- Award ceremony &amp; networking</li>
             </ul>
           </motion.div>
         </div>
@@ -230,6 +257,7 @@ export function SponsorsSection() {
   const communitySponsors = [
     { name: 'SA UNMC', icon: '/sa_logo.png', bgClass: '' },
     { name: 'School of Computer and Mathematical Sciences', icon: '/unm_logo.png', bgClass: '' },
+    { name: 'CSS Society', icon: '/CSSLogo.png', bgClass: 'bg-white/10' },
   ];
 
   return (
@@ -381,7 +409,11 @@ export function Footer() {
               className="w-40 h-40 md:w-55 md:h-55 object-contain cursor-pointer"
               onClick={() => setDvdMode(true)}
             />
-         </div>
+            <div>
+              <p className="font-pixel text-sm text-white">NOTTS HACK 2026</p>
+              <p className="font-mono text-xs text-white/60">UNM CSS <br /> University of Nottingham Malaysia</p>
+            </div>
+          </div>
 
           <div className="flex justify-center gap-4">
             {socials.map((social) => (
