@@ -81,12 +81,12 @@ const containerVariants = {
 
 const phaseVariants = {
   hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, x: -12 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.35, ease: 'easeOut' } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.35, ease: 'easeOut' as const } },
 };
 
 export default function TimelineSection() {
